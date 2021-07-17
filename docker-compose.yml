@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 networks:
   development:
   test:
@@ -12,7 +12,6 @@ services:
     command: redis-server
     networks:
       - development
-      - test
     volumes:
       - shared_data:/var/shared/redis
   restarone_db:
@@ -23,7 +22,6 @@ services:
       - shared_data:/var/shared
     networks:
       - development
-      - test
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
@@ -46,28 +44,8 @@ services:
     tty: true
     env_file: .env.development
     entrypoint: dev-entrypoint.sh
-    command: ['rails', 'server', '-p', '3000', '-b', '0.0.0.0']
+    command: ["rails", "server", "-p", "3000", "-b", "0.0.0.0"]
     environment:
       RAILS_ENV: development
-    depends_on:
-      - restarone_db
-  restarone_test:
-    image: restarone_restarone_app
-    container_name: restarone_test
-    volumes:
-      - .:/var/app
-      - shared_data:/var/shared
-      - gem_cache:/usr/local/bundle/gems
-    networks:
-      - test
-    ports:
-      - 3001:3000
-    stdin_open: true
-    tty: true
-    env_file: .env.test
-    entrypoint: test-entrypoint.sh
-    command: ["rails", "-v"]
-    environment:
-      RAILS_ENV: test
     depends_on:
       - restarone_db
