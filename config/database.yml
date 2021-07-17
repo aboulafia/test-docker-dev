@@ -24,6 +24,7 @@ default: &default
 development:
   <<: *default
   database: restarone_development
+  port: 5099
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
